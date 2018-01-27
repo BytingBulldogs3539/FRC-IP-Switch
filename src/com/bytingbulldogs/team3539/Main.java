@@ -1,6 +1,7 @@
+package com.bytingbulldogs.team3539;
+
 import javafx.scene.paint.Color;
 
-import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 import javafx.animation.FadeTransition;
@@ -28,13 +28,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /*CHANGES 1.1
- * Added Smart Properties File Checking System
- * Added Profiles
+ * Add Smart Properties file checking system
+ * Add profiles
  */
 /*CHANGES 1.2
- * Improved Smart Properties File Checking System
- * Added Profile Names
- * Added Fading Feature For Success Label (due to the fact that you couldent tell if it was displaying it after it had successed once before)
+ * Improve Smart Properties file checking system
+ * Add profile names
+ * Add fading feature for Success Label to improve clarity between runs
  */
 
 public class Main extends Application
@@ -95,22 +95,21 @@ public class Main extends Application
 
 		File directory = new File(path);
 		File propfilecheck = new File(path + "\\config.properties");
-		
-		//"Smart Config"
-		// This will check and make sure that the config is there and that it has stuff in it. This also is where the config updating happons.
-		
+
+		// "Smart Config"
+		// This will check for content inside of the config.
+
 		if (!directory.exists() || !propfilecheck.exists())
 		{
 			directory.mkdir();
-			//if the file location does not exist create the file path and the config file.
-			//or if the config file does not exist add that.
+			// If the file location does not exist, create the file path and the config file.
+			// or if just the config file does not exist, create it.
 			try
 			{
 				props = new Properties();
 				output = new FileOutputStream(path + "\\config.properties");
-				
-				
-				//the value xxx is not a "valid return" for this program so when it see xxx when loading the config it just ignores it.
+
+				// the value xxx is not a "valid return"
 				props.setProperty("Name_Current", "xxx");
 				props.setProperty("IP_Current", "xxx");
 				props.setProperty("Mask_Current", "xxx");
@@ -160,14 +159,14 @@ public class Main extends Application
 		}
 		else
 		{
-			//if the file does exist load the config into the currently blank spaces in the settings menu.
+			// If the file does exist, load the config into the currently blank spaces in the settings menu.
 			Properties prop = new Properties();
 			in = new FileInputStream(path + "\\config.properties");
 			prop.load(in);
 			in.close();
 			try
 			{
-				//here is where the program can tell if the return is "valid" by if it gets an xxx as a return.
+				// detects whether there is a value
 				if (!prop.get("Name_Current").equals("xxx"))
 				{
 					name.setText((String) prop.get("Name_Current"));
@@ -191,7 +190,7 @@ public class Main extends Application
 						profName.setText((String) prop.get("ProfName_Current"));
 					}
 				}
-				// This catch statement converts an old config from version (1.1) to the newest version.
+				// Converts an old config from version (1.1) to the newest version.
 				catch (NullPointerException x2)
 				{
 					System.out.println("OLD CONFIG V1.1");
@@ -211,7 +210,7 @@ public class Main extends Application
 					props.store(output, null);
 				}
 			}
-			// this catch will only run if there is an error while getting the "new" config file format.
+			// Catches Error while getting the "new" config file format.
 			catch (NullPointerException x)
 			{
 
@@ -293,7 +292,7 @@ public class Main extends Application
 		////////////////////////////////////////////////////////////////////
 
 		////////////////////////////////////////////////////////////////////
-		// Start of settings again
+		// Start of settings (again lol)
 		////////////////////////////////////////////////////////////////////
 
 		settings = new Stage();
@@ -649,7 +648,7 @@ public class Main extends Application
 
 		apply.setOnAction(e ->
 		{
-			// If the Ip address field does not contain the
+			// If the IP address field does not contain the
 			if (!IP.getText().matches(".*[0-9].*"))
 			{
 				IPLabel.setTextFill(Color.RED);
@@ -670,7 +669,7 @@ public class Main extends Application
 			else
 				gatewayLabel.setTextFill(Color.BLACK);
 
-			// If all of the ip fields are numbers then we will apply the settings to the
+			// If all of the IP fields are numbers then we will apply the settings to the
 			// properties file
 			if (IP.getText().matches(".*[0-9].*") && Mask.getText().matches(".*[0-9].*") && gateway.getText().matches(".*[0-9].*"))
 			{
@@ -732,7 +731,7 @@ public class Main extends Application
 		AnchorPane.setTopAnchor(IP, 35.0);
 		AnchorPane.setLeftAnchor(IP, 125.0);
 		AnchorPaneSettings.getChildren().add(IP);
-		// mask field
+		// Mask field
 		Mask.setMaxWidth(150);
 		Mask.setMinWidth(150);
 		AnchorPane.setTopAnchor(Mask, 65.0);
@@ -751,7 +750,7 @@ public class Main extends Application
 		AnchorPane.setLeftAnchor(profName, 125.0);
 		AnchorPaneSettings.getChildren().add(profName);
 
-		// connection name label
+		// Connection name label
 		AnchorPane.setTopAnchor(connectionName, 5.0);
 		AnchorPane.setLeftAnchor(connectionName, 5.0);
 		AnchorPaneSettings.getChildren().add(connectionName);
@@ -873,11 +872,11 @@ public class Main extends Application
 		settings.setTitle("Settings");
 		settings.hide();
 		////////////////////////////////////////////////////////////////////
-		// End Of Settings
+		// End of Settings
 		////////////////////////////////////////////////////////////////////
 
 		////////////////////////////////////////////////////////////////////
-		// Start Of the About Window
+		// Start of the About window
 		////////////////////////////////////////////////////////////////////
 		about = new Stage();
 		about.setTitle("About");
@@ -907,11 +906,11 @@ public class Main extends Application
 		about.setWidth(350);
 
 		////////////////////////////////////////////////////////////////////
-		// End of the About Window
+		// End of the About window
 		////////////////////////////////////////////////////////////////////
 
 		////////////////////////////////////////////////////////////////////
-		// Start Of Main Window
+		// Start of Main window
 		////////////////////////////////////////////////////////////////////
 
 		AnchorPane DefaultPane = new AnchorPane();
@@ -987,7 +986,8 @@ public class Main extends Application
 			{
 				e1.printStackTrace();
 			}
-			if (props.get("Name_Current").equals("xxx") || props.get("Mask_Current").equals("xxx") || props.get("IP_Current").equals("xxx") || props.get("Gateway_Current").equals("xxx"))
+			if (props.get("Name_Current").equals("xxx") || props.get("Mask_Current").equals("xxx") || props.get("IP_Current").equals("xxx")
+					|| props.get("Gateway_Current").equals("xxx"))
 			{
 				info.setVisible(true);
 			}
@@ -997,7 +997,8 @@ public class Main extends Application
 
 				try
 				{
-					Process p = Runtime.getRuntime().exec("netsh interface ipv4 set address name=" + props.get("Name_Current") + " source=dhcp");
+					Process p = Runtime.getRuntime()
+							.exec("netsh interface ipv4 set address name=" + props.get("Name_Current") + " source=dhcp");
 					BufferedReader in1 = new BufferedReader(new InputStreamReader(p.getInputStream()));
 					String line = null;
 					while ((line = in1.readLine()) != null)
@@ -1099,7 +1100,8 @@ public class Main extends Application
 
 				e1.printStackTrace();
 			}
-			if (props.get("Name_Current").equals("xxx") || props.get("Mask_Current").equals("xxx") || props.get("IP_Current").equals("xxx") || props.get("Gateway_Current").equals("xxx"))
+			if (props.get("Name_Current").equals("xxx") || props.get("Mask_Current").equals("xxx") || props.get("IP_Current").equals("xxx")
+					|| props.get("Gateway_Current").equals("xxx"))
 			{
 				info.setVisible(true);
 			}
@@ -1108,8 +1110,8 @@ public class Main extends Application
 				info.setVisible(false);
 				try
 				{
-					Process p = Runtime.getRuntime()
-							.exec("netsh interface ipv4 set address name=" + props.get("Name_Current") + " static " + props.get("IP_Current") + " " + props.get("Mask_Current") + " " + props.getProperty("Gateway_Current"));
+					Process p = Runtime.getRuntime().exec("netsh interface ipv4 set address name=" + props.get("Name_Current") + " static "
+							+ props.get("IP_Current") + " " + props.get("Mask_Current") + " " + props.getProperty("Gateway_Current"));
 					BufferedReader in1 = new BufferedReader(new InputStreamReader(p.getInputStream()));
 					String line = null;
 					line = in1.readLine();
@@ -1166,8 +1168,10 @@ public class Main extends Application
 					{
 						gatewayError.setVisible(false);
 					}
-					if (!line.contains("Invalid gateway parameter") && !line.contains("Invalid mask parameter") && !line.contains("Invalid address parameter")
-							&& !line.equalsIgnoreCase("The requested operation requires elevation (Run as administrator).") && !line.equalsIgnoreCase("The filename, directory name, or volume label syntax is incorrect."))
+					if (!line.contains("Invalid gateway parameter") && !line.contains("Invalid mask parameter")
+							&& !line.contains("Invalid address parameter")
+							&& !line.equalsIgnoreCase("The requested operation requires elevation (Run as administrator).")
+							&& !line.equalsIgnoreCase("The filename, directory name, or volume label syntax is incorrect."))
 					{
 						success.setVisible(true);
 						fadeOut.playFromStart();
@@ -1259,7 +1263,7 @@ public class Main extends Application
 		settings.getIcons().add(new Image(Main.class.getResourceAsStream("download.png")));
 
 		////////////////////
-		// End of Main Window
+		// End of Main window
 		////////////////////
 
 	}
