@@ -265,11 +265,10 @@ public class Main extends Application
 
 			java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
 			java.awt.Image image1 = ImageIO.read(Main.class.getResource("download.png"));
+			image1 = image1.getScaledInstance(16, 16, java.awt.Image.SCALE_SMOOTH);
 			java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image1);
-			trayIcon.setImageAutoSize(true);
-
 			// show the main app stage.
-     		java.awt.MenuItem openItem = new java.awt.MenuItem("Show");
+			java.awt.MenuItem openItem = new java.awt.MenuItem("Show");
 			//
 			java.awt.MenuItem DHCP = new java.awt.MenuItem("DHCP");
 			java.awt.MenuItem Static = new java.awt.MenuItem("Static");
@@ -282,20 +281,20 @@ public class Main extends Application
 
 				setStatic();
 			});
-			
+
 			trayIcon.addActionListener(event -> Platform.runLater(this::showStage));
-			
+
 			openItem.addActionListener(event -> Platform.runLater(this::showStage));
-			
-			 // the convention for tray icons seems to be to set the default icon for opening
-			 // the application stage in a bold font.
+
+			// the convention for tray icons seems to be to set the default icon for opening
+			// the application stage in a bold font.
 			java.awt.Font defaultFont = java.awt.Font.decode(null);
 			openItem.setFont(defaultFont);
-			
-			 // to really exit the application, the user must go to the system tray icon
-			 // and select the exit option, this will shutdown JavaFX and remove the
-			 // tray icon (removing the tray icon will also shut down AWT).
-			
+
+			// to really exit the application, the user must go to the system tray icon
+			// and select the exit option, this will shutdown JavaFX and remove the
+			// tray icon (removing the tray icon will also shut down AWT).
+
 			java.awt.MenuItem exitItem = new java.awt.MenuItem("Exit");
 			exitItem.addActionListener(event ->
 			{
@@ -303,9 +302,7 @@ public class Main extends Application
 				tray.remove(trayIcon);
 			});
 
-
-			
-			 // setup the popup menu for the application.
+			// setup the popup menu for the application.
 			final java.awt.PopupMenu popup = new java.awt.PopupMenu();
 			popup.add(openItem);
 			popup.add(DHCP);
@@ -318,7 +315,7 @@ public class Main extends Application
 			tray.add(trayIcon);
 
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
