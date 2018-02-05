@@ -61,7 +61,7 @@ public class Main extends Application
 {
 	public Stage defaultStage;
 	public Stage stage;
-	double versionNum = 1.3;
+	double versionNum = 1.4;
 	Properties props;
 	OutputStream output = null;
 	FileInputStream in;
